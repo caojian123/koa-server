@@ -15,6 +15,7 @@
   "license": "MIT",
   "homepage": "https://github.com/johndatserakis/koa-vue-notes-api#readme",
   "dependencies": {
+    "@vipabc/node-tsp": "0.0.7",
     "bcrypt": "^2.0.1",
     "date-fns": "^1.29.0",
     "dotenv": "^6.0.0",

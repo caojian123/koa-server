@@ -6,16 +6,14 @@
 /* Manage MySQL database connections.                                                             */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-import mysql from 'mysql'; // fast mysql driver
-import Debug from 'debug';          // small debugging utility
-import config from '../../config';
-const debug = Debug('app:mysql'); // mysql db queries
+import mysql from 'mysql' // fast mysql driver
+import Debug from 'debug' // small debugging utility
+import config from '../../config'
+const debug = Debug('app:mysql') // mysql db queries
 
-let connectionPool = null;
-
+let connectionPool = null
 
 class MysqlDb {
-
     /**
      * Perform a query.
      *
@@ -27,10 +25,10 @@ class MysqlDb {
      *   const [ books ] = await Db.query('Select * From Books Where Author = ?', [ 'David' ]);
      */
     static async query(sql, values = []) {
-        if (!connectionPool) await setupConnectionPool();
-        debug(sql, values);
+        if (!connectionPool) await setupConnectionPool()
+        debug(sql, values)
 
-        return connectionPool.query(sql, values);
+        return connectionPool.query(sql, values)
     }
 
     /**
@@ -55,14 +53,13 @@ class MysqlDb {
      * @returns {Object} Database connection.
      */
     static async connect() {
-        if (!connectionPool) await setupConnectionPool();
+        if (!connectionPool) await setupConnectionPool()
 
-        const db = await global.connectionPool.getConnection();
+        const db = await global.connectionPool.getConnection()
 
-        return db;
+        return db
     }
 }
-
 
 /**
  * First connection request after app startup will set up connection pool.
@@ -85,13 +82,15 @@ const knex = require('knex')({
     client: 'mysql',
     connection: {
         host: process.env.DB_HOST,
-        username: process.env.DB_USER,
+        user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        port: process.env.DB_PORT
-    }
-});
+        port: process.env.DB_PORT,
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_unicode_ci',
+    },
+    acquireConnectionTimeout: 10000,
+})
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-export default knex;
-
+export default knex

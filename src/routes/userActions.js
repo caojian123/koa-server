@@ -13,7 +13,7 @@ router.get('/', async (ctx, next) => {
 //Initial controller once for all routes
 const userActionController = new UserActionController()
 
-router.get('/api/v2/members/:id', userActionController.getMemberById);
+router.get('/api/v2/members/:id', userActionController.getMemberById)
 
 router.post('/api/v1/user/authenticate', async (ctx, next) => {
     await userActionController.authenticate(ctx)

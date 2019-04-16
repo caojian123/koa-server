@@ -4,7 +4,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import fse from 'fs-extra'
 import dateFormat from 'date-fns/format'
 import dateCompareAsc from 'date-fns/compare_asc'
-import userService  from '../service/User';
+import userService from '../service/User'
 
 const userSchemaSignup = joi.object({
     firstName: joi
@@ -51,11 +51,11 @@ const userSchemaResetPassword = joi.object({
 
 class UserController {
     async getMemberById(ctx) {
-        const id = ctx.params.id;
-        const data = await userService.findById(id);
+        const id = ctx.params.id
+        const data = await userService.findById(id)
         ctx.body = {
-            data
-        };
+            data,
+        }
     }
 
     async signup(ctx) {
@@ -93,7 +93,6 @@ class UserController {
         //Now let's generate a token for this user
         request.token = await this.generateUniqueToken()
 
-
         //Let's grab their ipaddress
         //TODO: This doesn't work correctly because of the reverse-proxy
         request.ipAddress = ctx.request.ip
@@ -128,7 +127,7 @@ class UserController {
             //And return our response.
             ctx.body = {
                 message: 'SUCCESS',
-                id: result
+                id: result,
             }
         } catch (error) {
             ctx.throw(400, 'INVALID_DATA')
@@ -154,7 +153,6 @@ class UserController {
             ctx.throw(401, 'NO_REFRESH_TOKEN')
         }
 
-
         ctx.body = {
             accessToken: 'token',
             refreshToken: 'refreshTokenData.refreshToken',
@@ -170,10 +168,10 @@ class UserController {
                     updatedAt: dateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss'),
                 })
                 .where({
-                    username: request.username
+                    username: request.username,
                 })
             ctx.body = {
-                message: 'SUCCESS'
+                message: 'SUCCESS',
             }
         } catch (error) {
             ctx.throw(400, 'INVALID_DATA')
@@ -196,14 +194,12 @@ class UserController {
                     refreshToken: request.refreshToken,
                 })
             ctx.body = {
-                message: 'SUCCESS'
+                message: 'SUCCESS',
             }
         } catch (error) {
             ctx.throw(400, 'INVALID_DATA')
         }
     }
-
-
 
     async checkPasswordResetToken(ctx) {
         const request = ctx.request.body
@@ -232,19 +228,15 @@ class UserController {
         }
 
         ctx.body = {
-            message: 'SUCCESS'
+            message: 'SUCCESS',
         }
     }
-
-
 
     async private(ctx) {
         ctx.body = {
-            user: ctx.state.user
+            user: ctx.state.user,
         }
     }
-
-
 
     async checkUniqueToken(token) {
         let result = await db('users')

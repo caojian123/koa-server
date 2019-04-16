@@ -13,6 +13,9 @@ router.get('/', async (ctx, next) => {
 //Initial controller once for all routes
 const applicationController = new ApplicationController()
 
-router.get('/api/v1/application', async (ctx) => await applicationController.applicationController(ctx));
+router.post(
+    '/api/v1/application/query',
+    async ctx => await applicationController.applicationController(ctx)
+)
 
 export default router
