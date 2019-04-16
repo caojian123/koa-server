@@ -6,7 +6,6 @@ import cors from 'kcors';
 import logger from './logs/log';
 import userAgent from 'koa-useragent';
 import error from 'koa-json-error';
-import * as Tsp from '@vipabc/node-tsp';
 
 //Routes
 import userActionsRouter from './routes/userActions';
@@ -67,20 +66,5 @@ app.use(userActionsRouter.allowedMethods())
 app.use(applicationAction.routes())
 app.use(applicationAction.allowedMethods())
 
-// TSP
-const config = {
-    "centralUrl": "http://central.tsp.weitutorstage.com", // TSP注册中心地址
-    "provider": {                                         // 服务方
-        "heartBeatInterval": 5,                             // 心跳频率，单位秒
-        "env": "stage",
-        "sgName": "member.sms.config.api",
-        "version": "0.0.0.1",
-    },
-    "consumer": {                                         // 消费方
-        "cacheExpire": 10,                                  // TSP服务寻址本地缓存时间，单位秒
-    }
-}
-
-Tsp.option(config);
 
 export default app
