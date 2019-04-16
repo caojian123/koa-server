@@ -6,7 +6,7 @@
 /* Manage MySQL database connections.                                                             */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-import mysql from 'mysql2/promise'; // fast mysql driver
+import mysql from 'mysql'; // fast mysql driver
 import Debug from 'debug';          // small debugging utility
 import config from '../../config';
 const debug = Debug('app:mysql'); // mysql db queries
@@ -26,7 +26,7 @@ class MysqlDb {
      * @example
      *   const [ books ] = await Db.query('Select * From Books Where Author = ?', [ 'David' ]);
      */
-    static async query(sql, values) {
+    static async query(sql, values = []) {
         if (!connectionPool) await setupConnectionPool();
         debug(sql, values);
 
@@ -67,21 +67,31 @@ class MysqlDb {
 /**
  * First connection request after app startup will set up connection pool.
  */
-async function setupConnectionPool() {
-    connectionPool = mysql.createPool({
-        host     : config.database.HOST,
-        user     : config.database.USERNAME,
-        password : config.database.PASSWORD,
-        database : config.database.DATABASE,
-        port     : config.database.PORT
-      });
-    // traditional mode ensures not null is respected for unsupplied fields, ensures valid JavaScript dates, etc
-   // await connectionPool.query('SET SESSION sql_mode = "TRADITIONAL"');
-    debug(`connected to ${config.database.HOST}/${config.database.DATABASE}`);
-}
+// async function setupConnectionPool() {
+//     connectionPool = mysql.createPool({
+//         host: process.env.DB_HOST,
+//         username: 'demo',//process.env.DB_USER,
+//         password: '123456',//process.env.DB_PASSWORD,
+//         database: process.env.DB_DATABASE,
+//         port: process.env.DB_PORT
+//     });
+//     console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD,process.env.DB_DATABASE);
+//     // traditional mode ensures not null is respected for unsupplied fields, ensures valid JavaScript dates, etc
+//     // await connectionPool.query('SET SESSION sql_mode = "TRADITIONAL"');
+//     debug(`connected to ${process.env.DB_HOST}/${process.env.DATABASE}`);
+// }
 
-
+const knex = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: process.env.DB_HOST,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        port: process.env.DB_PORT
+    }
+});
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-export default MysqlDb;
+export default knex;
 

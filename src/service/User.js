@@ -1,5 +1,5 @@
 import db from '../db/db';
-import ModelError from '../models/modelerror';
+import ModelError from '../models/modelError';
 
 class User {
     static async findById(id) {

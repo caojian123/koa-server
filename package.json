@@ -30,8 +30,9 @@
     "koa-ratelimit": "^4.1.1",
     "koa-router": "^7.4.0",
     "koa-useragent": "^1.1.0",
+    "lodash": "^4.17.11",
     "log4js": "^2.8.0",
-    "mysql2": "^1.6.5"
+    "mysql": "^2.16.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

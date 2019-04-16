@@ -9,7 +9,7 @@ import error from 'koa-json-error'
 
 //Routes
 import userActionsRouter from './routes/userActions'
-
+import applicationAction from './routes/applicationAction'
 //Initialize app
 const app = new Koa()
 
@@ -61,5 +61,7 @@ app.use(bodyParser({ enableTypes: ['json'] }))
 //For router
 app.use(userActionsRouter.routes())
 app.use(userActionsRouter.allowedMethods())
+app.use(applicationAction.routes());
+app.use(applicationAction.allowedMethods());
 
 export default app
