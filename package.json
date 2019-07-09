@@ -1,77 +1,64 @@
 {
-  "name": "koa-vue-notes-api",
-  "version": "2.0.0",
-  "description": "A SPA using Koa as the backend and Vue as the frontend.",
-  "author": "John Datserakis",
-  "private": true,
-  "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon app.js --exec",
-    "test": "NODE_ENV=testing jest --forceExit",
-    "build": "NODE_ENV=production babel src -d build && npm run pretty",
-    "pretty": "prettier --write --print-width 80 --single-quote --trailing-comma es5 --tab-width 4 --no-semi 'src/**/*.js' 'tests/**/*.js'",
-    "start-production": "NODE_ENV=production pm2 start ecosystem.json",
-    "clean": "npm cache clean --force"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/johndatserakis/koa-vue-notes-api#readme",
-  "dependencies": {
-    "bcrypt": "^3.0.6",
-    "date-fns": "^1.29.0",
-    "dotenv": "^6.0.0",
-    "fs-extra": "^6.0.1",
-    "jest": "^23.1.0",
-    "joi": "^13.4.0",
-    "jsonwebtoken": "^8.2.2",
-    "kcors": "^2.2.1",
-    "knex": "^0.14.6",
-    "koa": "^2.5.1",
-    "koa-bodyparser": "^4.2.1",
-    "koa-json-error": "^3.1.2",
-    "koa-ratelimit": "^4.1.1",
-    "koa-router": "^7.4.0",
-    "koa-useragent": "^1.1.0",
-    "lodash": "^4.17.11",
-    "log4js": "^2.8.0",
-    "mysql": "^2.16.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "cross-env": "^5.2.0",
-    "nodemon": "^1.17.5",
-    "prettier": "^1.13.4"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "last 2 versions",
-              "safari >= 7"
-            ]
-          }
-        }
-      ]
-    ]
-  },
-  "keywords": [
-    "koa",
-    "koa2",
-    "api",
-    "boilerplate",
-    "vue",
-    "spa",
-    "backend",
-    "jwt",
-    "pm2",
-    "mysql",
-    "database"
-  ],
-  "jest": {
-    "testEnvironment": "node"
-  }
+    "name": "member-sms-api",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "watch-server": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node src/index.ts",
+        "watch-server:prod": "cross-env NODE_ENV=production nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node src/index.ts",
+        "build-ts": "tsc",
+        "copy-static-assets": "ts-node copyStaticAssets.ts",
+        "tslint": "tslint -c tslint.json -p tsconfig.json",
+        "serve": "node dist/index.js",
+        "build": "cross-env NODE_ENV=production npm run build-ts && npm run copy-static-assets",
+        "start:stage": "cross-env NODE_ENV=development node ./index.js",
+        "start:prod": "cross-env NODE_ENV=production node ./index.js",
+        "heroku-postbuild": "npm run build",
+        "dev": "rm -rf ./dist && ts-node ./scripts/start-dev.ts",
+        "build:stage": "rm -rf ./dist && ts-node ./scripts/build.ts"
+    },
+    "author": "",
+    "license": "MIT",
+    "keywords": [
+        "typescript",
+        "koa2",
+        "jwt",
+        "rest",
+        "typeORM",
+        "class-validator"
+    ],
+    "devDependencies": {
+        "@types/dotenv": "^4.0.3",
+        "@types/koa": "2.0.44",
+        "@types/koa-bodyparser": "^4.2.0",
+        "@types/koa-helmet": "^3.1.2",
+        "@types/koa-jwt": "^3.3.0",
+        "@types/koa-router": "^7.0.28",
+        "@types/koa__cors": "^2.2.2",
+        "@types/log4js": "^2.3.5",
+        "@types/mysql": "^2.15.5",
+        "@types/node": "^10.7.0",
+        "cross-env": "^5.2.0",
+        "log4js": "^4.1.0",
+        "nodemon": "^1.17.4",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.10.0",
+        "typescript": "^3.2.1"
+    },
+    "dependencies": {
+        "@koa/cors": "^2.2.1",
+        "class-validator": "^0.9.1",
+        "dotenv": "^6.0.0",
+        "koa": "^2.5.1",
+        "koa-bodyparser": "^4.2.1",
+        "koa-helmet": "^4.0.0",
+        "koa-jwt": "^3.3.2",
+        "koa-router": "^7.4.0",
+        "mysql": "^2.16.0",
+        "pg": "^7.4.3",
+        "pg-connection-string": "^2.0.0",
+        "reflect-metadata": "^0.1.12",
+        "typeorm": "^0.2.6",
+        "winston": "^3.0.0"
+    }
 }
